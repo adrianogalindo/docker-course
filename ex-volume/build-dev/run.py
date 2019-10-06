@@ -3,7 +3,7 @@ import http.server
 import socketserver
 import getpass
 
-class MyHTTPHandler(http.server.SimpleHTTPResquestHandler):
+class MyHTTPHandler(http.server.SimpleHTTPRequestHandler):
     def log_message(self, format, *args):
         logging.info("%s - - [%s] %s\n"% (
             self.client_address[0],
@@ -11,18 +11,17 @@ class MyHTTPHandler(http.server.SimpleHTTPResquestHandler):
             format%args
         ))
 
-
 logging.basicConfig(
     filename='/log/http-server.log',
     format='%(asctime)s - %(levelname)s - %(message)s',
     level=logging.INFO
 )
 logging.getLogger().addHandler(logging.StreamHandler())
-logging.info('Starting...')
+logging.info('inicializando...')
 PORT = 8000
 
 httpd = socketserver.TCPServer(("", PORT), MyHTTPHandler)
-logging.info('Listening port: %s', PORT)
-logging.info('user: %s', getpass.getuser())
-httpd.serve_forever
+logging.info('escutando a porta: %s', PORT)
+logging.info('usuário: %s', getpass.getuser())
+httpd.serve_forever()
 
